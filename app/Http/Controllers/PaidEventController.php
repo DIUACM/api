@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Enums\Gender;
 use App\Enums\RegistrationStatus;
-use App\Enums\TshirtSize;
 use App\Models\PaidEvent;
 use App\Models\Registration;
 use Illuminate\Http\JsonResponse;
@@ -169,6 +168,7 @@ class PaidEventController extends Controller
                 'departments' => $paidEvent->departments,
                 'sections' => $paidEvent->sections,
                 'lab_teacher_names' => $paidEvent->lab_teacher_names,
+                'tshirt_sizes' => $paidEvent->tshirt_sizes,
             ],
             'user' => [
                 'email' => $user->email,
@@ -178,10 +178,9 @@ class PaidEventController extends Controller
                 'department' => $user->department,
                 'gender' => $user->gender?->value,
             ],
-            'tshirtSizes' => array_map(
-                fn (TshirtSize $size) => ['value' => $size->value, 'label' => $size->getLabel()],
-                TshirtSize::cases()
-            ),
+            'tshirtSizes' => $paidEvent->tshirt_sizes
+                ? array_map(fn ($size) => ['value' => strtolower($size), 'label' => strtoupper($size)], $paidEvent->tshirt_sizes)
+                : [],
             'genders' => array_map(
                 fn (Gender $gender) => ['value' => $gender->value, 'label' => $gender->getLabel()],
                 Gender::cases()
@@ -242,7 +241,7 @@ class PaidEventController extends Controller
             'section' => ['required', 'string', 'max:255'],
             'gender' => ['required', 'string', 'in:male,female,other'],
             'lab_teacher_name' => ['required', 'string', 'max:255'],
-            'tshirt_size' => ['required', 'string', 'in:xs,s,m,l,xl,xxl,xxxl'],
+            'tshirt_size' => ['required', 'string', 'max:50'],
             'transport_service_required' => ['required', 'boolean'],
             'pickup_point' => ['nullable', 'string', 'max:255', 'required_if:transport_service_required,true'],
         ]);

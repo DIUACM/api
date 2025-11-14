@@ -5,7 +5,6 @@ namespace App\Models;
 use App\Enums\Gender;
 use App\Enums\PaymentMethod;
 use App\Enums\RegistrationStatus;
-use App\Enums\TshirtSize;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -42,7 +41,6 @@ class Registration extends Model
             'payment_method' => PaymentMethod::class,
             'status' => RegistrationStatus::class,
             'gender' => Gender::class,
-            'tshirt_size' => TshirtSize::class,
         ];
     }
 

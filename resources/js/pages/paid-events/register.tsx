@@ -21,6 +21,7 @@ type PaidEvent = {
     departments: { name: string }[] | null;
     sections: { name: string }[] | null;
     lab_teacher_names: { initial: string; full_name: string }[] | null;
+    tshirt_sizes: string[] | null;
 };
 
 type User = {

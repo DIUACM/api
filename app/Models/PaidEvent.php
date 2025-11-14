@@ -32,6 +32,7 @@ class PaidEvent extends Model implements HasMedia
         'departments',
         'sections',
         'lab_teacher_names',
+        'tshirt_sizes',
         'status',
     ];
 
@@ -45,6 +46,7 @@ class PaidEvent extends Model implements HasMedia
             'departments' => 'array',
             'sections' => 'array',
             'lab_teacher_names' => 'array',
+            'tshirt_sizes' => 'array',
         ];
     }
 

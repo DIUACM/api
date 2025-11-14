@@ -154,6 +154,19 @@ class PaidEventForm
                             ])
                             ->addActionLabel('Add Teacher')
                             ->helperText('Add lab teacher information for registration'),
+
+                        Repeater::make('tshirt_sizes')
+                            ->label('T-shirt Sizes')
+                            ->columnSpan(2)
+                            ->grid(4)
+                            ->simple(
+                                TextInput::make('size')
+                                    ->hiddenLabel()
+                                    ->placeholder('e.g., XS, S, M, L, XL')
+                                    ->required()
+                            )
+                            ->addActionLabel('Add Size')
+                            ->helperText('Add available t-shirt sizes for this event (leave empty to use default sizes: XS, S, M, L, XL, XXL, XXXL)'),
                     ])
                     ->columns(2),
 

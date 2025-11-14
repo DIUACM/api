@@ -27,6 +27,7 @@ return new class extends Migration
             $table->json('departments')->nullable();
             $table->json('sections')->nullable();
             $table->json('lab_teacher_names')->nullable();
+            $table->json('tshirt_sizes')->nullable();
             $table->string('status')->default('draft');
             $table->timestamps();
         });
