@@ -392,14 +392,10 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                                     </SelectContent>
                                                 </Select>
                                             ) : (
-                                                <Input
-                                                    id="department"
-                                                    type="text"
-                                                    value={data.department}
-                                                    onChange={(e) => setData('department', e.target.value)}
-                                                    placeholder="Enter your department"
-                                                    className={validationErrors.department ? 'border-red-500' : ''}
-                                                />
+                                                <div className="rounded-lg border border-orange-200 bg-orange-50 p-3 text-sm text-orange-800 dark:border-orange-800/30 dark:bg-orange-900/20 dark:text-orange-300">
+                                                    <p className="font-medium">No departments configured</p>
+                                                    <p className="mt-1">Please contact the event organizer to add department options.</p>
+                                                </div>
                                             )}
                                             {(validationErrors.department || errors.department) && (
                                                 <p className="text-sm text-red-600 dark:text-red-400">{validationErrors.department || errors.department}</p>
@@ -422,14 +418,10 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                                     </SelectContent>
                                                 </Select>
                                             ) : (
-                                                <Input
-                                                    id="section"
-                                                    type="text"
-                                                    value={data.section}
-                                                    onChange={(e) => setData('section', e.target.value)}
-                                                    placeholder="Enter your section"
-                                                    className={validationErrors.section ? 'border-red-500' : ''}
-                                                />
+                                                <div className="rounded-lg border border-orange-200 bg-orange-50 p-3 text-sm text-orange-800 dark:border-orange-800/30 dark:bg-orange-900/20 dark:text-orange-300">
+                                                    <p className="font-medium">No sections configured</p>
+                                                    <p className="mt-1">Please contact the event organizer to add section options.</p>
+                                                </div>
                                             )}
                                             {(validationErrors.section || errors.section) && (
                                                 <p className="text-sm text-red-600 dark:text-red-400">{validationErrors.section || errors.section}</p>
@@ -452,14 +444,10 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                                     </SelectContent>
                                                 </Select>
                                             ) : (
-                                                <Input
-                                                    id="lab_teacher_name"
-                                                    type="text"
-                                                    value={data.lab_teacher_name}
-                                                    onChange={(e) => setData('lab_teacher_name', e.target.value)}
-                                                    placeholder="Enter lab teacher name"
-                                                    className={validationErrors.lab_teacher_name ? 'border-red-500' : ''}
-                                                />
+                                                <div className="rounded-lg border border-orange-200 bg-orange-50 p-3 text-sm text-orange-800 dark:border-orange-800/30 dark:bg-orange-900/20 dark:text-orange-300">
+                                                    <p className="font-medium">No lab teachers configured</p>
+                                                    <p className="mt-1">Please contact the event organizer to add lab teacher options.</p>
+                                                </div>
                                             )}
                                             {(validationErrors.lab_teacher_name || errors.lab_teacher_name) && (
                                                 <p className="text-sm text-red-600 dark:text-red-400">{validationErrors.lab_teacher_name || errors.lab_teacher_name}</p>
@@ -468,18 +456,25 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
 
                                         <div className="space-y-2">
                                             <Label htmlFor="tshirt_size" className="text-slate-700 dark:text-slate-300">T-shirt Size *</Label>
-                                            <Select value={data.tshirt_size} onValueChange={(value) => setData('tshirt_size', value)}>
-                                                <SelectTrigger className={validationErrors.tshirt_size ? 'border-red-500 w-full' : 'w-full'}>
-                                                    <SelectValue placeholder="Select size" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {tshirtSizes.map((size) => (
-                                                        <SelectItem key={size.value} value={size.value}>
-                                                            {size.label}
-                                                        </SelectItem>
-                                                    ))}
-                                                </SelectContent>
-                                            </Select>
+                                            {tshirtSizes && tshirtSizes.length > 0 ? (
+                                                <Select value={data.tshirt_size} onValueChange={(value) => setData('tshirt_size', value)}>
+                                                    <SelectTrigger className={validationErrors.tshirt_size ? 'border-red-500 w-full' : 'w-full'}>
+                                                        <SelectValue placeholder="Select size" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {tshirtSizes.map((size) => (
+                                                            <SelectItem key={size.value} value={size.value}>
+                                                                {size.label}
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+                                            ) : (
+                                                <div className="rounded-lg border border-orange-200 bg-orange-50 p-3 text-sm text-orange-800 dark:border-orange-800/30 dark:bg-orange-900/20 dark:text-orange-300">
+                                                    <p className="font-medium">No t-shirt sizes configured</p>
+                                                    <p className="mt-1">Please contact the event organizer to add t-shirt size options.</p>
+                                                </div>
+                                            )}
                                             {(validationErrors.tshirt_size || errors.tshirt_size) && (
                                                 <p className="text-sm text-red-600 dark:text-red-400">{validationErrors.tshirt_size || errors.tshirt_size}</p>
                                             )}
@@ -548,14 +543,10 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                                         </SelectContent>
                                                     </Select>
                                                 ) : (
-                                                    <Input
-                                                        id="pickup_point"
-                                                        type="text"
-                                                        value={data.pickup_point}
-                                                        onChange={(e) => setData('pickup_point', e.target.value)}
-                                                        placeholder="Enter pickup point"
-                                                        className={validationErrors.pickup_point ? 'border-red-500' : ''}
-                                                    />
+                                                    <div className="rounded-lg border border-orange-200 bg-orange-50 p-3 text-sm text-orange-800 dark:border-orange-800/30 dark:bg-orange-900/20 dark:text-orange-300">
+                                                        <p className="font-medium">No pickup points configured</p>
+                                                        <p className="mt-1">Please contact the event organizer to add pickup point options.</p>
+                                                    </div>
                                                 )}
                                                 {(validationErrors.pickup_point || errors.pickup_point) && (
                                                     <p className="text-sm text-red-600 dark:text-red-400">{validationErrors.pickup_point || errors.pickup_point}</p>
