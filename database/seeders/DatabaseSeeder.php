@@ -36,7 +36,10 @@ class DatabaseSeeder extends Seeder
         $this->command->info('📅 Seeding Events (50 events)...');
         $this->call(EventSeeder::class);
 
-        $this->command->info('📊 Seeding Trackers (10 trackers)...');
+        $this->command->info('� Seeding Paid Events (20 events)...');
+        $this->call(PaidEventSeeder::class);
+
+        $this->command->info('�📊 Seeding Trackers (10 trackers)...');
         $this->call(TrackerSeeder::class);
 
         $this->command->info('📈 Seeding Rank Lists (2-4 per tracker)...');
@@ -54,6 +57,7 @@ class DatabaseSeeder extends Seeder
         $this->command->info('   - 100 Contests created');
         $this->command->info('   - Variable Teams created (2-10 per contest)');
         $this->command->info('   - 50 Events created with attendees');
+        $this->command->info('   - 20 Paid Events created');
         $this->command->info('   - 10 Trackers created');
         $this->command->info('   - Variable Rank Lists created (2-4 per tracker)');
         $this->command->info('   - Event User Stats created for all events');
