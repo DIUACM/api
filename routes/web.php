@@ -31,6 +31,13 @@ Route::post('/events/{event}/attendance', [EventController::class, 'storeAttenda
 Route::get('/paid-events', [PaidEventController::class, 'index'])->name('paid-events.index');
 Route::get('/paid-events/{paidEvent:slug}', [PaidEventController::class, 'show'])->name('paid-events.show');
 
+// Registration routes (requires auth and verified email)
+Route::middleware(['auth', 'verified'])->group(function () {
+    Route::get('/paid-events/{paidEvent:slug}/register', [PaidEventController::class, 'register'])->name('paid-events.register');
+    Route::post('/paid-events/{paidEvent:slug}/register/validate-student-id', [PaidEventController::class, 'validateStudentId'])->name('paid-events.validate-student-id');
+    Route::post('/paid-events/{paidEvent:slug}/register/submit', [PaidEventController::class, 'storeRegistration'])->name('paid-events.register.submit');
+});
+
 Route::get('/blog', [BlogController::class, 'index'])->name('blog.index');
 Route::get('/blog/{blogPost}', [BlogController::class, 'show'])->name('blog.show');
 

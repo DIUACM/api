@@ -2,8 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Enums\Gender;
+use App\Enums\RegistrationStatus;
+use App\Enums\TshirtSize;
 use App\Models\PaidEvent;
+use App\Models\Registration;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
 use Inertia\Response;
 use RalphJSmit\Laravel\SEO\Support\SEOData;
@@ -115,5 +122,184 @@ class PaidEventController extends Controller
                 description: $paidEvent->description ?? "Register for {$paidEvent->title} - DIU ACM",
             ),
         ]);
+    }
+
+    public function register(PaidEvent $paidEvent): Response|RedirectResponse
+    {
+        // Only allow registration for published paid events
+        if ($paidEvent->status !== 'published') {
+            abort(404);
+        }
+
+        // Check if registration is open
+        if (! $paidEvent->isRegistrationOpen()) {
+            return redirect()->route('paid-events.show', $paidEvent->slug)
+                ->with('error', 'Registration is not currently open for this event.');
+        }
+
+        // Check if registration is full
+        if ($paidEvent->isRegistrationFull()) {
+            return redirect()->route('paid-events.show', $paidEvent->slug)
+                ->with('error', 'Registration is full for this event.');
+        }
+
+        // Check if user has already registered
+        $existingRegistration = Registration::query()
+            ->where('paid_event_id', $paidEvent->id)
+            ->where('user_id', auth()->id())
+            ->first();
+
+        if ($existingRegistration) {
+            return redirect()->route('paid-events.show', $paidEvent->slug)
+                ->with('error', 'You have already registered for this event.');
+        }
+
+        $user = auth()->user();
+
+        return Inertia::render('paid-events/register', [
+            'paidEvent' => [
+                'id' => $paidEvent->id,
+                'title' => $paidEvent->title,
+                'slug' => $paidEvent->slug,
+                'semester' => $paidEvent->semester,
+                'registration_fee' => $paidEvent->registration_fee,
+                'student_id_rules' => $paidEvent->student_id_rules,
+                'student_id_rules_guide' => $paidEvent->student_id_rules_guide,
+                'pickup_points' => $paidEvent->pickup_points,
+                'departments' => $paidEvent->departments,
+                'sections' => $paidEvent->sections,
+                'lab_teacher_names' => $paidEvent->lab_teacher_names,
+            ],
+            'user' => [
+                'email' => $user->email,
+                'name' => $user->name,
+                'student_id' => $user->student_id,
+                'phone' => $user->phone,
+                'department' => $user->department,
+                'gender' => $user->gender?->value,
+            ],
+            'tshirtSizes' => array_map(
+                fn (TshirtSize $size) => ['value' => $size->value, 'label' => $size->getLabel()],
+                TshirtSize::cases()
+            ),
+            'genders' => array_map(
+                fn (Gender $gender) => ['value' => $gender->value, 'label' => $gender->getLabel()],
+                Gender::cases()
+            ),
+        ])->withViewData([
+            'SEOData' => new SEOData(
+                title: "Register for {$paidEvent->title}",
+                description: "Complete your registration for {$paidEvent->title}.",
+            ),
+        ]);
+    }
+
+    public function validateStudentId(Request $request, PaidEvent $paidEvent): JsonResponse
+    {
+        $request->validate([
+            'student_id' => ['required', 'string'],
+        ]);
+
+        $studentId = $request->input('student_id');
+
+        // Check if student ID matches the pattern
+        if ($paidEvent->student_id_rules) {
+            if (! preg_match($paidEvent->student_id_rules, $studentId)) {
+                return response()->json([
+                    'valid' => false,
+                    'message' => 'Your student ID does not meet the eligibility requirements for this event.',
+                ], 422);
+            }
+        }
+
+        // Check if this student ID is already registered for this event
+        $existingRegistration = Registration::query()
+            ->where('paid_event_id', $paidEvent->id)
+            ->where('student_id', $studentId)
+            ->first();
+
+        if ($existingRegistration) {
+            return response()->json([
+                'valid' => false,
+                'message' => 'This student ID has already been registered for this event.',
+            ], 422);
+        }
+
+        return response()->json([
+            'valid' => true,
+            'message' => 'Student ID is valid and eligible for registration.',
+        ]);
+    }
+
+    public function storeRegistration(Request $request, PaidEvent $paidEvent): RedirectResponse
+    {
+        // Validate the request
+        $validated = $request->validate([
+            'student_id' => ['required', 'string'],
+            'name' => ['required', 'string', 'max:255'],
+            'phone' => ['required', 'string', 'max:20'],
+            'department' => ['required', 'string', 'max:255'],
+            'section' => ['required', 'string', 'max:255'],
+            'gender' => ['required', 'string', 'in:male,female,other'],
+            'lab_teacher_name' => ['required', 'string', 'max:255'],
+            'tshirt_size' => ['required', 'string', 'in:xs,s,m,l,xl,xxl,xxxl'],
+            'transport_service_required' => ['required', 'boolean'],
+            'pickup_point' => ['nullable', 'string', 'max:255', 'required_if:transport_service_required,true'],
+        ]);
+
+        // Check if registration is still open
+        if (! $paidEvent->isRegistrationOpen()) {
+            return redirect()->route('paid-events.show', $paidEvent->slug)
+                ->with('error', 'Registration is no longer open for this event.');
+        }
+
+        // Check if registration is full
+        if ($paidEvent->isRegistrationFull()) {
+            return redirect()->route('paid-events.show', $paidEvent->slug)
+                ->with('error', 'Registration is full for this event.');
+        }
+
+        // Validate student ID against rules
+        if ($paidEvent->student_id_rules) {
+            if (! preg_match($paidEvent->student_id_rules, $validated['student_id'])) {
+                return back()->withErrors([
+                    'student_id' => 'Your student ID does not meet the eligibility requirements for this event.',
+                ])->withInput();
+            }
+        }
+
+        try {
+            DB::beginTransaction();
+
+            // Create the registration
+            Registration::query()->create([
+                'paid_event_id' => $paidEvent->id,
+                'user_id' => auth()->id(),
+                'name' => $validated['name'],
+                'email' => auth()->user()->email,
+                'student_id' => $validated['student_id'],
+                'phone' => $validated['phone'],
+                'department' => $validated['department'],
+                'section' => $validated['section'],
+                'gender' => $validated['gender'],
+                'lab_teacher_name' => $validated['lab_teacher_name'],
+                'tshirt_size' => $validated['tshirt_size'],
+                'transport_service_required' => $validated['transport_service_required'],
+                'pickup_point' => $validated['pickup_point'],
+                'amount' => $paidEvent->registration_fee,
+                'status' => RegistrationStatus::PENDING,
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('paid-events.show', $paidEvent->slug)
+                ->with('success', 'Registration submitted successfully! Please complete the payment to confirm your registration.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return back()
+                ->with('error', 'An error occurred while processing your registration. Please try again.')
+                ->withInput();
+        }
     }
 }

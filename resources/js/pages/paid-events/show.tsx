@@ -1,7 +1,7 @@
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/main-layout';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, router } from '@inertiajs/react';
 import { isAfter, isWithinInterval } from 'date-fns';
 import { AlertCircle, ArrowLeft, CalendarDays, CheckCircle2, Clock, DollarSign, FileText, Info, MapPin, Users } from 'lucide-react';
 
@@ -327,6 +327,7 @@ export default function PaidEventDetailsPage({ paidEvent, registrationInfo }: Pa
                                 className="hidden w-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 font-medium text-white shadow-md transition-all hover:from-blue-700 hover:to-cyan-700 hover:shadow-xl disabled:from-slate-400 disabled:to-slate-500 disabled:opacity-50 lg:block dark:from-blue-500 dark:to-cyan-500 dark:hover:from-blue-600 dark:hover:to-cyan-600"
                                 size="lg"
                                 disabled={!canRegister}
+                                onClick={() => canRegister && router.visit(`/paid-events/${paidEvent.slug}/register`)}
                             >
                                 {getButtonText()}
                             </Button>
@@ -341,6 +342,7 @@ export default function PaidEventDetailsPage({ paidEvent, registrationInfo }: Pa
                     className="w-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 font-medium text-white shadow-lg transition-all hover:from-blue-700 hover:to-cyan-700 hover:shadow-xl disabled:from-slate-400 disabled:to-slate-500 disabled:opacity-50 dark:from-blue-500 dark:to-cyan-500 dark:hover:from-blue-600 dark:hover:to-cyan-600"
                     size="lg"
                     disabled={!canRegister}
+                    onClick={() => canRegister && router.visit(`/paid-events/${paidEvent.slug}/register`)}
                 >
                     {getButtonText()}
                 </Button>

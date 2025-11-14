@@ -118,7 +118,7 @@ class User extends Authenticatable implements FilamentUser, HasMedia, MustVerify
 
     public function paidEventRegistrations()
     {
-        return $this->hasMany(PaidEventRegistration::class);
+        return $this->hasMany(Registration::class);
     }
 
     /**
