@@ -331,7 +331,7 @@ export default function PaidEventDetailsPage({ paidEvent, registrationInfo }: Pa
 
                             {/* Register Button */}
                             <Button
-                                className="hidden w-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 font-medium text-white shadow-md transition-all hover:from-blue-700 hover:to-cyan-700 hover:shadow-xl disabled:from-slate-400 disabled:to-slate-500 disabled:opacity-50 lg:block dark:from-blue-500 dark:to-cyan-500 dark:hover:from-blue-600 dark:hover:to-cyan-600"
+                                className="w-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 font-medium text-white shadow-md transition-all hover:from-blue-700 hover:to-cyan-700 hover:shadow-xl disabled:from-slate-400 disabled:to-slate-500 disabled:opacity-50 dark:from-blue-500 dark:to-cyan-500 dark:hover:from-blue-600 dark:hover:to-cyan-600"
                                 size="lg"
                                 disabled={!registrationInfo.is_open || registrationInfo.is_full || isClosed}
                             >
@@ -344,25 +344,6 @@ export default function PaidEventDetailsPage({ paidEvent, registrationInfo }: Pa
                                         : '🎫 Register Now'}
                             </Button>
                         </div>
-                    </div>
-                </div>
-
-                {/* Sticky Register Button for Mobile */}
-                <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-slate-200 bg-white p-4 shadow-lg lg:hidden dark:border-slate-700 dark:bg-slate-900">
-                    <div className="container mx-auto">
-                        <Button
-                            className="w-full rounded-full bg-gradient-to-r from-blue-600 to-cyan-600 font-medium text-white shadow-md transition-all hover:from-blue-700 hover:to-cyan-700 hover:shadow-xl disabled:from-slate-400 disabled:to-slate-500 disabled:opacity-50 dark:from-blue-500 dark:to-cyan-500 dark:hover:from-blue-600 dark:hover:to-cyan-600"
-                            size="lg"
-                            disabled={!registrationInfo.is_open || registrationInfo.is_full || isClosed}
-                        >
-                            {registrationInfo.is_full
-                                ? '🚫 Registration Full'
-                                : isClosed
-                                  ? '⏰ Registration Closed'
-                                  : isUpcoming
-                                    ? '🕐 Registration Not Started'
-                                    : '🎫 Register Now'}
-                        </Button>
                     </div>
                 </div>
             </section>
