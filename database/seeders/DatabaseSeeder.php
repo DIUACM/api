@@ -13,6 +13,10 @@ class DatabaseSeeder extends Seeder
     {
         $this->command->info('🚀 Starting database seeding...');
 
+        // Seed roles and permissions first
+        $this->command->info('🔐 Seeding Roles and Permissions...');
+        $this->call(RoleAndPermissionSeeder::class);
+
         // Seed in proper order due to relationships
         $this->command->info('📊 Seeding Users (1000 users)...');
         $this->call(UserSeeder::class);
@@ -43,6 +47,7 @@ class DatabaseSeeder extends Seeder
 
         $this->command->info('✅ Database seeding completed successfully!');
         $this->command->info('📈 Summary:');
+        $this->command->info('   - Super Admin created: sourov2305101004@diu.edu.bd');
         $this->command->info('   - 1000 Users created');
         $this->command->info('   - 100 Blog Posts created');
         $this->command->info('   - 100 Galleries created');

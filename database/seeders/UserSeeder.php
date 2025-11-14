@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
         $this->command->info('Creating 1000 users...');
 
         // Create the admin user first
-        User::factory()->create([
+        $adminUser = User::factory()->create([
             'name' => 'Admin User',
             'email' => 'sourov2305101004@diu.edu.bd',
             'username' => 'admin_user',
@@ -25,6 +25,10 @@ class UserSeeder extends Seeder
             'student_id' => 'DIU-23051010',
             'max_cf_rating' => 2400,
         ]);
+
+        // Assign super admin role with all permissions
+        $this->command->info('Assigning super admin role to admin user...');
+        $adminUser->assignRole('super_admin');
 
         // Create users with competitive programming handles (400 users)
         User::factory()
