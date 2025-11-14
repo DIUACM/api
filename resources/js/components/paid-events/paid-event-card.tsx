@@ -30,9 +30,7 @@ export function PaidEventCard({ paidEvent }: Props) {
     const isClosed = isAfter(now, registrationDeadline);
 
     // Calculate registration progress
-    const progress = paidEvent.registration_limit
-        ? Math.min(100, ((paidEvent.registrations_count ?? 0) / paidEvent.registration_limit) * 100)
-        : 0;
+    const progress = paidEvent.registration_limit ? Math.min(100, ((paidEvent.registrations_count ?? 0) / paidEvent.registration_limit) * 100) : 0;
 
     const formatDeadlineStatus = (deadlineDate: Date, reference: Date): string => {
         const diffInMinutes = Math.floor((deadlineDate.getTime() - reference.getTime()) / (1000 * 60));
@@ -157,15 +155,11 @@ export function PaidEventCard({ paidEvent }: Props) {
                                 <div className="flex items-center">
                                     <Users className="mr-1.5 h-4 w-4 text-blue-500" />
                                     <span className="flex items-center gap-1">
-                                        <span className="font-medium text-slate-800 dark:text-slate-200">
-                                            {paidEvent.registrations_count}
-                                        </span>
+                                        <span className="font-medium text-slate-800 dark:text-slate-200">{paidEvent.registrations_count}</span>
                                         {paidEvent.registration_limit ? ` / ${paidEvent.registration_limit}` : ''} registered
                                     </span>
                                 </div>
-                                {paidEvent.registration_limit && (
-                                    <span className="text-xs font-medium">{Math.round(progress)}% full</span>
-                                )}
+                                {paidEvent.registration_limit && <span className="text-xs font-medium">{Math.round(progress)}% full</span>}
                             </div>
                             {paidEvent.registration_limit && (
                                 <div className="mt-2 h-2 overflow-hidden rounded-full bg-slate-100 dark:bg-slate-800">

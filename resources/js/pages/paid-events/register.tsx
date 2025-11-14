@@ -121,7 +121,7 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
             e.preventDefault();
             e.stopPropagation();
         }
-        
+
         if (step === 1) {
             const isValid = await validateStudentIdStep();
             if (isValid) {
@@ -131,7 +131,7 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
         } else if (step === 2) {
             // Validate personal details
             const errors: Record<string, string> = {};
-            
+
             if (!data.name?.trim()) {
                 errors.name = 'Full name is required';
             }
@@ -164,7 +164,7 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
         } else if (step === 3) {
             // Validate transport
             const errors: Record<string, string> = {};
-            
+
             if (data.transport_service_required && !data.pickup_point?.trim()) {
                 errors.pickup_point = 'Please select a pickup point';
             }
@@ -209,9 +209,7 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                         {s < 4 && (
                             <div
                                 className={`mx-2 h-1 flex-1 rounded transition-colors ${
-                                    s < step
-                                        ? 'bg-green-500 dark:bg-green-400'
-                                        : 'bg-slate-200 dark:bg-slate-700'
+                                    s < step ? 'bg-green-500 dark:bg-green-400' : 'bg-slate-200 dark:bg-slate-700'
                                 }`}
                             />
                         )}
@@ -219,18 +217,10 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                 ))}
             </div>
             <div className="mt-3 flex justify-between text-xs font-medium">
-                <span className={step === 1 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}>
-                    Student ID
-                </span>
-                <span className={step === 2 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}>
-                    Details
-                </span>
-                <span className={step === 3 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}>
-                    Transport
-                </span>
-                <span className={step === 4 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}>
-                    Review
-                </span>
+                <span className={step === 1 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}>Student ID</span>
+                <span className={step === 2 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}>Details</span>
+                <span className={step === 3 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}>Transport</span>
+                <span className={step === 4 ? 'text-blue-600 dark:text-blue-400' : 'text-slate-600 dark:text-slate-400'}>Review</span>
             </div>
         </div>
     );
@@ -241,21 +231,14 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
 
             <section className="container mx-auto px-4 py-8">
                 {/* Back Button */}
-                <Button
-                    variant="ghost"
-                    size="sm"
-                    className="mb-4 gap-2"
-                    onClick={() => router.visit(`/paid-events/${paidEvent.slug}`)}
-                >
+                <Button variant="ghost" size="sm" className="mb-4 gap-2" onClick={() => router.visit(`/paid-events/${paidEvent.slug}`)}>
                     <ArrowLeft className="h-4 w-4" />
                     Back to Event
                 </Button>
 
                 {/* Header */}
                 <div className="mb-8">
-                    <h1 className="mb-2 text-2xl font-bold text-slate-900 sm:text-3xl dark:text-white">
-                        Register for {paidEvent.title}
-                    </h1>
+                    <h1 className="mb-2 text-2xl font-bold text-slate-900 sm:text-3xl dark:text-white">Register for {paidEvent.title}</h1>
                     <div className="flex flex-wrap items-center gap-2">
                         <Badge variant="outline" className="border-slate-200 bg-slate-50 dark:border-slate-700 dark:bg-slate-800">
                             📚 {paidEvent.semester}
@@ -276,9 +259,7 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                             {step === 1 && (
                                 <div className="space-y-6">
                                     <div>
-                                        <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">
-                                            Verify Your Student ID
-                                        </h2>
+                                        <h2 className="mb-4 text-xl font-semibold text-slate-900 dark:text-white">Verify Your Student ID</h2>
 
                                         {paidEvent.student_id_rules && (
                                             <div className="mb-4 rounded-lg border border-blue-200 bg-blue-50 p-4 dark:border-blue-800/30 dark:bg-blue-900/20">
@@ -294,7 +275,9 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                         )}
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="student_id" className="text-slate-700 dark:text-slate-300">Student ID *</Label>
+                                            <Label htmlFor="student_id" className="text-slate-700 dark:text-slate-300">
+                                                Student ID *
+                                            </Label>
                                             <Input
                                                 id="student_id"
                                                 type="text"
@@ -321,7 +304,9 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
 
                                     <div className="grid gap-6 sm:grid-cols-2">
                                         <div className="space-y-2">
-                                            <Label htmlFor="name" className="text-slate-700 dark:text-slate-300">Full Name *</Label>
+                                            <Label htmlFor="name" className="text-slate-700 dark:text-slate-300">
+                                                Full Name *
+                                            </Label>
                                             <Input
                                                 id="name"
                                                 type="text"
@@ -336,19 +321,23 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">Email *</Label>
-                                            <Input 
-                                                id="email" 
-                                                type="email" 
-                                                value={user.email} 
-                                                disabled 
-                                                className="cursor-not-allowed bg-slate-100 dark:bg-slate-800" 
+                                            <Label htmlFor="email" className="text-slate-700 dark:text-slate-300">
+                                                Email *
+                                            </Label>
+                                            <Input
+                                                id="email"
+                                                type="email"
+                                                value={user.email}
+                                                disabled
+                                                className="cursor-not-allowed bg-slate-100 dark:bg-slate-800"
                                             />
                                             <p className="text-xs text-slate-500 dark:text-slate-400">Email cannot be changed</p>
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="phone" className="text-slate-700 dark:text-slate-300">Phone Number *</Label>
+                                            <Label htmlFor="phone" className="text-slate-700 dark:text-slate-300">
+                                                Phone Number *
+                                            </Label>
                                             <Input
                                                 id="phone"
                                                 type="tel"
@@ -363,9 +352,11 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="gender" className="text-slate-700 dark:text-slate-300">Gender *</Label>
+                                            <Label htmlFor="gender" className="text-slate-700 dark:text-slate-300">
+                                                Gender *
+                                            </Label>
                                             <Select value={data.gender} onValueChange={(value) => setData('gender', value)}>
-                                                <SelectTrigger className={validationErrors.gender ? 'border-red-500 w-full' : 'w-full'}>
+                                                <SelectTrigger className={validationErrors.gender ? 'w-full border-red-500' : 'w-full'}>
                                                     <SelectValue placeholder="Select gender" />
                                                 </SelectTrigger>
                                                 <SelectContent>
@@ -382,10 +373,12 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="department" className="text-slate-700 dark:text-slate-300">Department *</Label>
+                                            <Label htmlFor="department" className="text-slate-700 dark:text-slate-300">
+                                                Department *
+                                            </Label>
                                             {paidEvent.departments && paidEvent.departments.length > 0 ? (
                                                 <Select value={data.department} onValueChange={(value) => setData('department', value)}>
-                                                    <SelectTrigger className={validationErrors.department ? 'border-red-500 w-full' : 'w-full'}>
+                                                    <SelectTrigger className={validationErrors.department ? 'w-full border-red-500' : 'w-full'}>
                                                         <SelectValue placeholder="Select department" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -403,15 +396,19 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                                 </div>
                                             )}
                                             {(validationErrors.department || errors.department) && (
-                                                <p className="text-sm text-red-600 dark:text-red-400">{validationErrors.department || errors.department}</p>
+                                                <p className="text-sm text-red-600 dark:text-red-400">
+                                                    {validationErrors.department || errors.department}
+                                                </p>
                                             )}
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="section" className="text-slate-700 dark:text-slate-300">Section *</Label>
+                                            <Label htmlFor="section" className="text-slate-700 dark:text-slate-300">
+                                                Section *
+                                            </Label>
                                             {paidEvent.sections && paidEvent.sections.length > 0 ? (
                                                 <Select value={data.section} onValueChange={(value) => setData('section', value)}>
-                                                    <SelectTrigger className={validationErrors.section ? 'border-red-500 w-full' : 'w-full'}>
+                                                    <SelectTrigger className={validationErrors.section ? 'w-full border-red-500' : 'w-full'}>
                                                         <SelectValue placeholder="Select section" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -434,10 +431,12 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="lab_teacher_name" className="text-slate-700 dark:text-slate-300">Lab Teacher *</Label>
+                                            <Label htmlFor="lab_teacher_name" className="text-slate-700 dark:text-slate-300">
+                                                Lab Teacher *
+                                            </Label>
                                             {paidEvent.lab_teacher_names && paidEvent.lab_teacher_names.length > 0 ? (
                                                 <Select value={data.lab_teacher_name} onValueChange={(value) => setData('lab_teacher_name', value)}>
-                                                    <SelectTrigger className={validationErrors.lab_teacher_name ? 'border-red-500 w-full' : 'w-full'}>
+                                                    <SelectTrigger className={validationErrors.lab_teacher_name ? 'w-full border-red-500' : 'w-full'}>
                                                         <SelectValue placeholder="Select lab teacher" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -455,15 +454,19 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                                 </div>
                                             )}
                                             {(validationErrors.lab_teacher_name || errors.lab_teacher_name) && (
-                                                <p className="text-sm text-red-600 dark:text-red-400">{validationErrors.lab_teacher_name || errors.lab_teacher_name}</p>
+                                                <p className="text-sm text-red-600 dark:text-red-400">
+                                                    {validationErrors.lab_teacher_name || errors.lab_teacher_name}
+                                                </p>
                                             )}
                                         </div>
 
                                         <div className="space-y-2">
-                                            <Label htmlFor="tshirt_size" className="text-slate-700 dark:text-slate-300">T-shirt Size *</Label>
+                                            <Label htmlFor="tshirt_size" className="text-slate-700 dark:text-slate-300">
+                                                T-shirt Size *
+                                            </Label>
                                             {tshirtSizes && tshirtSizes.length > 0 ? (
                                                 <Select value={data.tshirt_size} onValueChange={(value) => setData('tshirt_size', value)}>
-                                                    <SelectTrigger className={validationErrors.tshirt_size ? 'border-red-500 w-full' : 'w-full'}>
+                                                    <SelectTrigger className={validationErrors.tshirt_size ? 'w-full border-red-500' : 'w-full'}>
                                                         <SelectValue placeholder="Select size" />
                                                     </SelectTrigger>
                                                     <SelectContent>
@@ -481,7 +484,9 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                                 </div>
                                             )}
                                             {(validationErrors.tshirt_size || errors.tshirt_size) && (
-                                                <p className="text-sm text-red-600 dark:text-red-400">{validationErrors.tshirt_size || errors.tshirt_size}</p>
+                                                <p className="text-sm text-red-600 dark:text-red-400">
+                                                    {validationErrors.tshirt_size || errors.tshirt_size}
+                                                </p>
                                             )}
                                         </div>
                                     </div>
@@ -491,9 +496,9 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                         <div className="space-y-2">
                                             <Label className="text-slate-700 dark:text-slate-300">T-shirt Size Guide</Label>
                                             <div className="overflow-hidden rounded-lg border border-slate-200 dark:border-slate-700">
-                                                <img 
-                                                    src={paidEvent.tshirt_guideline_url} 
-                                                    alt="T-shirt Size Guide" 
+                                                <img
+                                                    src={paidEvent.tshirt_guideline_url}
+                                                    alt="T-shirt Size Guide"
                                                     className="h-auto w-full object-contain"
                                                 />
                                             </div>
@@ -522,7 +527,10 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                                 className="mt-1 h-4 w-4 rounded border-slate-300 text-blue-600 focus:ring-blue-500 dark:border-slate-600"
                                             />
                                             <div className="flex-1">
-                                                <Label htmlFor="transport_service_required" className="cursor-pointer font-medium text-slate-900 dark:text-white">
+                                                <Label
+                                                    htmlFor="transport_service_required"
+                                                    className="cursor-pointer font-medium text-slate-900 dark:text-white"
+                                                >
                                                     I need transport service
                                                 </Label>
                                                 <p className="mt-1 text-sm text-slate-600 dark:text-slate-400">
@@ -533,10 +541,12 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
 
                                         {data.transport_service_required && (
                                             <div className="space-y-2">
-                                                <Label htmlFor="pickup_point" className="text-slate-700 dark:text-slate-300">Pickup Point *</Label>
+                                                <Label htmlFor="pickup_point" className="text-slate-700 dark:text-slate-300">
+                                                    Pickup Point *
+                                                </Label>
                                                 {paidEvent.pickup_points && paidEvent.pickup_points.length > 0 ? (
                                                     <Select value={data.pickup_point} onValueChange={(value) => setData('pickup_point', value)}>
-                                                        <SelectTrigger className={validationErrors.pickup_point ? 'border-red-500 w-full' : 'w-full'}>
+                                                        <SelectTrigger className={validationErrors.pickup_point ? 'w-full border-red-500' : 'w-full'}>
                                                             <SelectValue placeholder="Select pickup point" />
                                                         </SelectTrigger>
                                                         <SelectContent>
@@ -554,7 +564,9 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                                     </div>
                                                 )}
                                                 {(validationErrors.pickup_point || errors.pickup_point) && (
-                                                    <p className="text-sm text-red-600 dark:text-red-400">{validationErrors.pickup_point || errors.pickup_point}</p>
+                                                    <p className="text-sm text-red-600 dark:text-red-400">
+                                                        {validationErrors.pickup_point || errors.pickup_point}
+                                                    </p>
                                                 )}
                                             </div>
                                         )}
@@ -597,7 +609,7 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                             )}
                                             <div>
                                                 <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Gender</div>
-                                                <div className="mt-1 font-medium capitalize text-slate-900 dark:text-white">{data.gender}</div>
+                                                <div className="mt-1 font-medium text-slate-900 capitalize dark:text-white">{data.gender}</div>
                                             </div>
                                             {data.lab_teacher_name && (
                                                 <div>
@@ -607,7 +619,7 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                             )}
                                             <div>
                                                 <div className="text-xs font-medium text-slate-500 dark:text-slate-400">T-shirt Size</div>
-                                                <div className="mt-1 font-medium uppercase text-slate-900 dark:text-white">{data.tshirt_size}</div>
+                                                <div className="mt-1 font-medium text-slate-900 uppercase dark:text-white">{data.tshirt_size}</div>
                                             </div>
                                             <div>
                                                 <div className="text-xs font-medium text-slate-500 dark:text-slate-400">Transport Service</div>
@@ -680,9 +692,9 @@ export default function RegisterPage({ paidEvent, user, tshirtSizes, genders }: 
                                         )}
                                     </Button>
                                 ) : (
-                                    <Button 
-                                        type="submit" 
-                                        disabled={processing} 
+                                    <Button
+                                        type="submit"
+                                        disabled={processing}
                                         className="gap-2 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 dark:from-blue-500 dark:to-cyan-500 dark:hover:from-blue-600 dark:hover:to-cyan-600"
                                     >
                                         {processing ? (

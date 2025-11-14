@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button';
 import MainLayout from '@/layouts/main-layout';
 import { Head, Link, router } from '@inertiajs/react';
 import { isAfter, isWithinInterval } from 'date-fns';
-import { AlertCircle, ArrowLeft, CalendarDays, CheckCircle2, Clock, DollarSign, FileText, Info, MapPin, Users } from 'lucide-react';
+import { AlertCircle, ArrowLeft, CalendarDays, CheckCircle2, Clock, FileText, Info, MapPin, Users } from 'lucide-react';
 
 type PaidEvent = {
     id: number;
@@ -253,9 +253,7 @@ export default function PaidEventDetailsPage({ paidEvent, registrationInfo }: Pa
                             <div className="rounded-xl border border-slate-200 bg-white p-6 shadow-sm dark:border-slate-700 dark:bg-slate-900">
                                 <div className="mb-4 flex items-center justify-between">
                                     <span className="text-sm font-medium text-slate-600 dark:text-slate-400">Registration Fee</span>
-                                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">
-                                        ৳{paidEvent.registration_fee}
-                                    </div>
+                                    <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">৳{paidEvent.registration_fee}</div>
                                 </div>
 
                                 {/* Registration Stats */}

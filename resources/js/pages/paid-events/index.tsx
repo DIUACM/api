@@ -71,9 +71,7 @@ export default function PaidEventsPage({ paidEvents, filters }: PaidEventsPagePr
             <section className="container mx-auto px-4 py-16">
                 <div className="mb-8">
                     <h1 className="text-3xl font-bold tracking-tight">Paid Events</h1>
-                    <p className="mt-1 text-slate-600 dark:text-slate-300">
-                        Register for bus trips, tours, and special events.
-                    </p>
+                    <p className="mt-1 text-slate-600 dark:text-slate-300">Register for bus trips, tours, and special events.</p>
                 </div>
 
                 <div className="mb-6">
@@ -93,7 +91,7 @@ export default function PaidEventsPage({ paidEvents, filters }: PaidEventsPagePr
                             {hasActiveFilters && (
                                 <button
                                     onClick={clearFilters}
-                                    className="flex items-center gap-2 whitespace-nowrap rounded-md bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
+                                    className="flex items-center gap-2 rounded-md bg-slate-100 px-4 py-2 text-sm font-medium whitespace-nowrap text-slate-700 transition-colors hover:bg-slate-200 dark:bg-slate-800 dark:text-slate-300 dark:hover:bg-slate-700"
                                 >
                                     <X className="h-4 w-4" />
                                     Clear Filters
@@ -108,9 +106,7 @@ export default function PaidEventsPage({ paidEvents, filters }: PaidEventsPagePr
                         <div className="mb-4 text-6xl">🎫</div>
                         <p className="mb-2 text-lg text-slate-500">No paid events found</p>
                         <p className="text-sm text-slate-400">
-                            {hasActiveFilters
-                                ? 'Try adjusting your search to see more events.'
-                                : 'There are no paid events available at the moment.'}
+                            {hasActiveFilters ? 'Try adjusting your search to see more events.' : 'There are no paid events available at the moment.'}
                         </p>
                     </div>
                 ) : (
