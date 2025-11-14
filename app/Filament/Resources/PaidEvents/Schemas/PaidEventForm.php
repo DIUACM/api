@@ -50,16 +50,29 @@ class PaidEventForm
                 Section::make('Registration Settings')
                     ->schema([
                         DateTimePicker::make('registration_start_time')
-                            ->required()
-                            ->native(false),
+                            ->seconds(false)
+                            ->displayFormat('M j, Y g:i A')
+                            ->timezone('Asia/Dhaka')
+                            ->label('Registration Start')
+                            ->required(),
                         DateTimePicker::make('registration_deadline')
-                            ->required()
-                            ->native(false)
-                            ->after('registration_start_time'),
+                            ->seconds(false)
+                            ->displayFormat('M j, Y g:i A')
+                            ->timezone('Asia/Dhaka')
+                            ->label('Registration Deadline')
+                            ->after('registration_start_time')
+                            ->required(),
                         TextInput::make('registration_limit')
                             ->numeric()
                             ->minValue(1)
                             ->placeholder('Leave empty for unlimited'),
+                        TextInput::make('registration_fee')
+                            ->numeric()
+                            ->prefix('৳')
+                            ->minValue(0)
+                            ->default(0)
+                            ->required()
+                            ->helperText('Enter 0 for free events'),
                         Select::make('status')
                             ->required()
                             ->options([

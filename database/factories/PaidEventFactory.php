@@ -28,6 +28,7 @@ class PaidEventFactory extends Factory
             'registration_start_time' => $startTime,
             'registration_deadline' => $deadline,
             'registration_limit' => fake()->optional(0.7)->numberBetween(20, 100),
+            'registration_fee' => fake()->randomFloat(2, 100, 1500),
             'status' => fake()->randomElement(['draft', 'published', 'closed']),
         ];
     }

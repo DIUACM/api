@@ -24,6 +24,7 @@ class PaidEvent extends Model implements HasMedia
         'registration_deadline',
         'registration_start_time',
         'registration_limit',
+        'registration_fee',
         'status',
     ];
 
@@ -32,6 +33,7 @@ class PaidEvent extends Model implements HasMedia
         return [
             'registration_deadline' => 'datetime',
             'registration_start_time' => 'datetime',
+            'registration_fee' => 'decimal:2',
         ];
     }
 

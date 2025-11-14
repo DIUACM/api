@@ -20,6 +20,7 @@ return new class extends Migration
             $table->dateTime('registration_deadline');
             $table->dateTime('registration_start_time');
             $table->unsignedInteger('registration_limit')->nullable();
+            $table->decimal('registration_fee', 8, 2)->default(0);
             $table->string('status')->default('draft');
             $table->timestamps();
         });

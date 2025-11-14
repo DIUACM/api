@@ -42,6 +42,10 @@ class PaidEventsTable
                     ->sortable()
                     ->label('Limit')
                     ->placeholder('Unlimited'),
+                TextColumn::make('registration_fee')
+                    ->money('BDT')
+                    ->sortable()
+                    ->label('Fee'),
                 TextColumn::make('status')
                     ->badge()
                     ->colors([

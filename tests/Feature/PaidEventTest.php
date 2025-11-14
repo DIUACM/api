@@ -81,3 +81,11 @@ test('paid event has tshirt size guideline media collection', function () {
     // Verify we can work with the tshirt_size_guideline collection
     expect($paidEvent->getMedia('tshirt_size_guideline')->count())->toBe(0);
 });
+
+test('paid event has registration fee', function () {
+    $paidEvent = PaidEvent::factory()->create([
+        'registration_fee' => 500.50,
+    ]);
+
+    expect($paidEvent->registration_fee)->toBe('500.50');
+});
